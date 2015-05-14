@@ -128,23 +128,24 @@ Another important consideration we had when designing the application was how to
 
 Once the user is finished practicing, the user presses a button to stop the recognition. The results page shows how many times each crutch word was said and how long the practice lasted. The user can then use this information to determine overall performance for the given session. There are many things that can be done to improve the user interface but they are not currently implemented. Discussion of future improvements can be found later in this paper.
 
-\subsection{Technical Implementation}
-
-The usefulness of our application is entirely dependant on the accuracy of our speech recognition. As a result, a lot of emphasis is placed on this computation. There were two main application program interfaces (API’s) to consider when it comes to Android speech recognition and natural language processing. The first is the Google native speech recognition API [6]. Google’s speech recognition is top-class. However, there are several drawbacks for this particular API. In general, the service is not very flexible. The process is completely abstracted and encapsulated, which is good for most people, but because we are using our application in a very specific way to search for keywords, being able to modify the process is a desirable feature. Furthermore, the Google speech recognition API does not support offline processing capabilities which means that it’s possible that the computation could be bottlenecked by the internet speed. However, the most important limitation that this API had was the lack of continuous keyword spotting. For our application to function as we want to, notifying the user in real time of crutch word usage, the speech processing needs to be done in real time. Google’s speech recognition library does not do this. 
-
-As a result, we used CMU Sphinx [7], a speech recognition API that is designed specifically for low-resource platforms (such as mobile devices). Not only does the CMU Sphinx Android port allow for continuous keyword spotting, it also allows for heavy customization in the natural language processing computation. 
-
-A lot of fine tuning of the speech recognition was needed in order to get decent accuracy from the system. CMU Sphinx performs signal processing to match the input sound against the phonetics of the words in its dictionary. A similarity matrix is calculated by comparing the input and the dictionary; if the similarity value crosses a certain threshold, a notification goes off, saying that there has been a match. Not only can we calibrate this threshold value, we can also change the dictionary that CMU Sphinx takes as an input. There are many trained dictionaries available and we found that one of the CMU Sphinx native dictionaries gave the best results.
-
-In performing keyword spotting, there are some nuances to consider. Oftentimes, crutch words such as “like” can be used in context correctly -- because the speech recognizer system is not smart enough to distinguish between a correct use of “like” and it being used as a crutch word, it simply notifies the user of both. There are some methods that can be used to try to minimize these occurrences. Given a large corpus, we can train a system to calculate the probability of a sequence of words. An N-gram is a set of consecutive words given a corpus. It can be seen as a window frame of words. Given a block of text, n words are viewed at a time. Using the Markov Assumption, we can estimate the likelihood of a word appearing in a sentence given the surrounding words. For example, if the user says “she is like a rose,” the system will initially hear “she is” and find the probability that the next token is “like.” If the probability is high, then the notification will not go off, as it’s likely that the word is being used properly and vice versa. This type of natural language processing is fairly computationally heavy. We implemented a similar system that would help us eliminate a small number of false positives but quickly learned that the processing power of mobile devices is not fast enough to support such complex computations. The phone processed the computation too slowly and as a result the phone was no longer giving real time feedback, which undermines the main functionality of the device. As mobile computing becomes faster, however, this is a good strategy to eliminate false positives.
-
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.9\columnwidth]{Figure1}
+\includegraphics[width=0.9\columnwidth]{graph}
 \caption{The primary modes of the application: The recordings list, the profile page, and the review/record page.
 }
 \label{fig:figure1}
 \end{figure}
+
+
+\subsection{Technical Implementation}
+
+The usefulness of our application is entirely dependant on the accuracy of our speech recognition. As a result, a lot of emphasis is placed on this computation. There were two main application program interfaces (API’s) to consider when it comes to Android speech recognition and natural language processing. The first is the Google native speech recognition API [6]. Google’s speech recognition is top-class. However, there are several drawbacks for this particular API. In general, the service is not very flexible. The process is completely abstracted and encapsulated, which is good for most people, but because we are using our application in a very specific way to search for keywords, being able to modify the process is a desirable feature. Furthermore, the Google speech recognition API does not support offline processing capabilities which means that it’s possible that the computation could be bottlenecked by the internet speed. However, the most important limitation that this API had was the lack of continuous keyword spotting. For our application to function as we want to, notifying the user in real time of crutch word usage, the speech processing needs to be done in real time. Google’s speech recognition library does not do this. 
+
+As a result, we used CMU Sphinx [7]	, a speech recognition API that is designed specifically for low-resource platforms (such as mobile devices). Not only does the CMU Sphinx Android port allow for continuous keyword spotting, it also allows for heavy customization in the natural language processing computation. 
+
+A lot of fine tuning of the speech recognition was needed in order to get decent accuracy from the system. CMU Sphinx performs signal processing to match the input sound against the phonetics of the words in its dictionary. A similarity matrix is calculated by comparing the input and the dictionary; if the similarity value crosses a certain threshold, a notification goes off, saying that there has been a match. Not only can we calibrate this threshold value, we can also change the dictionary that CMU Sphinx takes as an input. There are many trained dictionaries available and we found that one of the CMU Sphinx native dictionaries gave the best results.
+
+In performing keyword spotting, there are some nuances to consider. Oftentimes, crutch words such as “like” can be used in context correctly -- because the speech recognizer system is not smart enough to distinguish between a correct use of “like” and it being used as a crutch word, it simply notifies the user of both. There are some methods that can be used to try to minimize these occurrences. Given a large corpus, we can train a system to calculate the probability of a sequence of words. An N-gram is a set of consecutive words given a corpus. It can be seen as a window frame of words. Given a block of text, n words are viewed at a time. Using the Markov Assumption, we can estimate the likelihood of a word appearing in a sentence given the surrounding words. For example, if the user says “she is like a rose,” the system will initially hear “she is” and find the probability that the next token is “like.” If the probability is high, then the notification will not go off, as it’s likely that the word is being used properly and vice versa. This type of natural language processing is fairly computationally heavy. We implemented a similar system that would help us eliminate a small number of false positives but quickly learned that the processing power of mobile devices is not fast enough to support such complex computations. The phone processed the computation too slowly and as a result the phone was no longer giving real time feedback, which undermines the main functionality of the device. As mobile computing becomes faster, however, this is a good strategy to eliminate false positives.
 
 \section{Methods}
 
@@ -177,7 +178,7 @@ From the crutch word frequency values that we obtain from the testing applicatio
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.9\columnwidth]{Figure1}
+\includegraphics[width=0.9\columnwidth]{graph}
 \caption{Data collected from 10 user volunteers over a duration of 16 minutes.
 }
 \label{fig:figure2}
@@ -186,7 +187,7 @@ From the crutch word frequency values that we obtain from the testing applicatio
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.9\columnwidth]{Figure1}
+\includegraphics[width=0.9\columnwidth]{table}
 \caption{Average crutch words detected for each 2 minute period over 10 volunteers
 }
 \label{fig:figure3}
@@ -194,7 +195,6 @@ From the crutch word frequency values that we obtain from the testing applicatio
 
 
 \section{RESULTS AND EVALUATION}
-
 
 For the initial testing phase, we collected the number of times that the users said the words “like” and “so”, keeping track of the app’s notify/not-notify status. We randomized the notification status to  eliminate user bias when collecting data. Here are some of the observations we were able to make upon examining the data:
 
@@ -211,6 +211,14 @@ Judging from both the difference in crutch word frequency between notifications 
 There can be a lot of additional work done on the mobile application in the future. Features such as sessions and internal storage would allow users to view and references their practices in their past to find trends and keep track of progress. Furthermore, building in-app graphs from data collected would be a very nice way for users to easily see how they are doing over time. Currently, crutch words that are based on phontics, such as ``um'' and ``uh'' are very hard to detect as there are many false positives. In the future, we hope to be able to implement phontic detection just as well as the word detection we have currently.
 
 Finally, creating a web application that could link to the application data via a user account would be very valuable to the user as the data would be more accessible and easier to view on a larger screen. With additonal computational power, the web application could also do more analysis on the speech practice.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.9\columnwidth]{future}
+\caption{User interface mock up
+}
+\label{fig:figure4}
+\end{figure}
 
 \section{Conclusion}
 
