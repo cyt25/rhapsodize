@@ -1,0 +1,237 @@
+\documentclass{sigchi}
+
+% Use this command to override the default ACM copyright statement (e.g. for preprints). 
+% Consult the conference website for the camera-ready copyright statement.
+\toappear{
+Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without 	fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM or the author must behonored. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. \\
+{\confname{UbiComp '13}}, Sept 9-12, 2013, Zurich, Switzerland.\\
+Copyright 2013 ACM 978-1-4503-1770-2/13/09...\$15.00.
+}
+
+% Arabic page numbers for submission. 
+% Remove this line to eliminate page numbers for the camera ready copy
+%\pagenumbering{arabic}
+
+
+% Load basic packages
+\usepackage{balance}  % to better equalize the last page
+\usepackage{graphics} % for EPS, load graphicx instead
+\usepackage{times}    % comment if you want LaTeX's default font
+\usepackage{url}      % llt: nicely formatted URLs
+
+% llt: Define a global style for URLs, rather that the default one
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\bf\ttfamily}}}
+\makeatother
+\urlstyle{leo}
+
+
+% To make various LaTeX processors do the right thing with page size.
+\def\pprw{8.5in}
+\def\pprh{11in}
+\special{papersize=\pprw,\pprh}
+\setlength{\paperwidth}{\pprw}
+\setlength{\paperheight}{\pprh}
+\setlength{\pdfpagewidth}{\pprw}
+\setlength{\pdfpageheight}{\pprh}
+
+% Make sure hyperref comes last of your loaded packages, 
+% to give it a fighting chance of not being over-written, 
+% since its job is to redefine many LaTeX commands.
+\usepackage[pdftex]{hyperref}
+\hypersetup{
+pdftitle={SIGCHI Conference Proceedings Format},
+pdfauthor={LaTeX},
+pdfkeywords={SIGCHI, proceedings, archival format},
+bookmarksnumbered,
+pdfstartview={FitH},
+colorlinks,
+citecolor=black,
+filecolor=black,
+linkcolor=black,
+urlcolor=black,
+breaklinks=true,
+}
+
+% create a shortcut to typeset table headings
+\newcommand\tabhead[1]{\small\textbf{#1}}
+
+
+% End of preamble. Here it comes the document.
+\begin{document}
+
+\title{Rhapsodize: Mobile Application for Improving Public Speaking Skills Through Training of Speech Disfluencies}
+
+\numberofauthors{2}
+\author{
+  \alignauthor Charles Tark\\
+    \affaddr{Cornell University}\\
+    \affaddr{516 University Ave, Ithaca, NY 14850}\\
+    \email{cyt25@cornell.edu}\\
+  \alignauthor 2nd Author Name\\
+    \affaddr{Affiliation}\\
+    \affaddr{Address}\\
+    \email{e-mail address}\\
+    \affaddr{Optional phone number}    
+}
+
+\maketitle
+
+\begin{abstract}
+Speech disfluencies are a common part of human conversation. From public speeches to everyday chatting, words such as “like,” “um,” and “such as” permeate our vocabulary. A paper in the Journal of Psycholinguistic Research looks for a relationship between disfluency and speech comprehension. It concludes that speech “disfluency affects core language comprehension processes” (Arnold 1). Additional studies have been done to identify why we say these words in our speech. A study published in the Language and Linguistics Compass Journal concludes that “there is little evidence to suggest that they are intentionally produced, or should be considered to be words in the conventional sense” (Corley 1), indicating that these words are purely hesitation disfluencies. Now that we have established these speech disfluencies are detrimental to communication and speech giving, we set out to create a tool to help individuals get rid of this habit. Our application, Rhapsodize, takes user speech as an input and notifies the user when/how often these words are said. The user would be able to view their relative performance over time regarding their speech patterns, tracking their improvement in avoiding these “crutch” words.
+\end{abstract}
+
+\keywords{
+	Guides; instructions; author's kit; conference publications;
+	keywords should be separated by a semi-colon.
+	\textcolor{red}{Mandatory section to be included in your final version.}
+}
+
+\category{H.5.m.}{Information Interfaces and Presentation (e.g. HCI)}{Miscellaneous}
+
+See: \url{http://www.acm.org/about/class/1998/}
+for more information and the full list of ACM classifiers
+and descriptors. 
+\textcolor{red}{Mandatory section to be included in your
+final version. On the submission page only the classifiers'
+letter-number combination will need to be entered.}
+
+\terms{
+	Human Factors; Design; Measurement. 
+	If you choose more than one ACM General Term, 
+	separate the terms with a semi-colon.
+}
+
+See list of the limited ACM 16 terms in the
+instructions and additional information:
+\url{http://www.sheridanprinting.com/sigchi/generalterms.htm}.
+\textcolor{red}{Optional section to be included in your final version.}
+
+\section{Introduction}
+
+Public speaking is a very common fear amongst people. Speech ranges across a lot of different scenarios -- after all, it is the main method by which we communicate with each other. Whether it is giving a speech or talking amongst friends, it is very common for people to have slight speech impediments. Phrases such as “like” and “um” permeates throughout our speech today and oftentimes the speaker does so unknowingly. After becoming so comfortable using these “crutch” words, it’s very hard for an individual to restrain his or herself from doing so.
+
+Our application, Rhapsodize, aims to prevent this problem. If a user gets some kind of notification when saying a crutch word, it will be easier to prevent in the future. When saying a crutch word in conversation or while practicing a speech, Rhapsodize will notify the user that a crutch word has been said, hopefully guiding the user to less and less frequent usage of these words. Over time, the user will be behaviorally conditioned to avoid saying these words, either consciously or subconsciously, thereby improving their overall speech giving performance.
+
+Rhapsodize is an Android application (4.1+) that uses Carnegie Mellon University’s CMUSphinx speech recognition API to continuously detect speech for crutch word occurrences. It notifies the user when these words are said and also keeps track of how often they are said so that the user can keep track of progress. Though ideally the application would be used throughout the day to keep track of the user’s speech in daily conversation, this would lead to privacy concerns as well as many more technical challenges in making the application more than simply proof of concept. As a result, Rhapsodize is to be used as a more situational, speech-giving improvement tool. The user places the phone running Rhapsodize in front of him or herself (or inside his or her pocket through the use of a microphone) while practicing giving a speech and the device will detect and count crutch word occurrences. 
+
+Our experimental design seeks to determine to what extent such a tool would benefit users in improving their speech giving skills. Ideally, use of the application would allow users to become more fluent in their speaking by allowing them to train themselves over time to speak with minimal inclusion of such speech disfluencies. Long term, we hope to distribute a fully-realized version of our application with additional features, including captured transcriptions and data visualizations for general and widespread public use.
+
+
+\section{Related Work}
+
+u wot m8
+
+\section{Methods}
+
+In the creation and testing of our application, we planned for the development of two somewhat distinct branches of Rhapsodize. That is, we initially developed a version of the application intended primarily for testing of viability and effectiveness of conditioning-based training of crutch words. This branch of development focused mostly on achieving the desired core functionality of the application in terms of distinct keyword parsing and recognition. It was this testing-version of the application that we used in performing all of our volunteer-based experiments. As a result, it is somewhat limited in terms of the end-functionality that we intended and can only detect certain crutch words that have been pre-programmed, that is, “like,” and “so.”
+
+The alternate branch of Rhapsodize was developed with the intent to create a production-level application ready for personal, public use. It is with this version that we intend to implement a fully featured application with tools for reviewing previously recorded transcripts as well as visualizations for the captured data.
+
+Through the behavioral training of users through auditory and haptic feedback, our application seeks to improve relative user performance to a significant degree. In evaluating the effectiveness of Rhapsodize in improving general speaking patterns through the removal of speech disfluencies, we developed the following experimental design. During our testing and evaluation, we regarded having an average decrease in crutch word usage of at least 1 word per minute as significant. In evaluating the results obtained through testing, we noted that due to large variations in speaking patterns per individual, there was a very diverse set of results, and depending on the user, the number and spread of crutch words detected was drastically varied.
+
+\subsection{Experimental Design}
+\begin{itemize}
+\item[1.] Create an Android application that when opened, tracks the input speech while notifying the user when a crutch word is said. The application tracks how many times a crutch word is said during each session the application is open.
+\item[2.] Find 5~10 willing volunteers with an Android device with 4.1+. After having them sign a consent paper, download the application on their phone and give them instructions for the experiment. The users are not informed of the full nature of the experiment, and specifically are not notified that crutch words will be detected. This is done as to prevent any pre-experiment bias that they may receive.
+\item[3.] Give the volunteer a piece of paper with a series of questions intended to invoke an extended duration of storytelling. At this point, the volunteer will give responses to these questions while the application is in use.
+\item[4.] Ask the participant for subjective views on if the application was helpful in practicing their speech. (i.e. Did you feel the application helped you minimize usage of crutch words? Did you enjoy the application user interface? What aspects of the application did you like/dislike?).
+\item[5.] Evaluate and analyze the gathered data. 
+\end{itemize}
+
+\subsection{Application Description}
+
+things
+
+\subsection{User Interface}
+
+yeh
+
+\subsection{Natural Language Processing}
+
+hi
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.9\columnwidth]{Figure1}
+\caption{The primary modes of the application: The recordings list, the profile page, and the review/record page.
+}
+\label{fig:figure1}
+\end{figure}
+
+\subsection{Data Collection}
+
+We rely on the cooperation of several volunteers for data collection. For the testing phase, the app collects data in eight 2-minute intervals for a total of 16 minutes. Notifications are enabled for exactly 4 of these intervals in a random order. Volunteers are given a written set of questions that invoke storytelling. The users are not told the functionality of the application; they are simply told that we are testing an application that encourages good speaking practices. As the users answer the given questions, the application notifies the user of crutch-word usage in real time via a vibration only if it is during one of the four intervals in which notifications are enabled. Each of the eight periods are set up such that a response should consume approximately one period, that is, 2 minutes. The phone is to be placed in the users’ pocket and an earpiece will be used as the input microphone during the collection.
+
+In this manner, we are able to observe the effects of the application in real-time, without directly biasing the user’s behavior. Furthermore, after the application testing has concluded, we ask participants for their subjective views on their speaking before, during, and after the testing and examine how they perceive their own performance. We can then look at the objective and subjective data to evaluate the effectiveness of our application.
+
+We utilize the CMUSphinx speech recognition API to detect speech and parse the spoken words. From this, we can gauge the user’s tendency to use certain words over others, and especially detect his/her usage of key “crutch” words. Throughout testing, the presence of these specific words will be recorded and analyzed with respect to time and application state.  For each of the randomized, two-minute long periods during which the application was being used, we recorded the number of times that the crutch words “like,” and “so,” were used. Aside from the automatically produced vibration notifications, the user was not interacted with during his or her speech. We performed a similar test for each of the other volunteers, trying as best as possible to avoid creating bias in anticipating the nature of the experiment.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.9\columnwidth]{Figure1}
+\caption{Data collected from 10 user volunteers over a duration of 16 minutes.
+}
+\label{fig:figure2}
+\end{figure}
+
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.9\columnwidth]{Figure1}
+\caption{Average crutch words detected for each 2 minute period over 10 volunteers
+}
+\label{fig:figure3}
+\end{figure}
+
+
+\section{RESULTS AND EVALUATION}
+
+
+For the initial testing phase, we collected the number of times that the users said the words “like” and “so”, keeping track of the app’s notify/not-notify status. We randomized the notification status to  eliminate user bias when collecting data. Here are some of the observations we were able to make upon examining the data:
+
+\begin{itemize}
+\item There was a distinct correlation between when notifications were enabled and when notifications were disabled. When notifications were enabled, users said 1.12 fewer crutch words per 2 minute interval on average.
+\item The spikes in our data can be attributed to the toggle-status between each interval. When notifications are enabled for two consecutive intervals, there is a very clear decrease in crutch word frequency as opposed to when notifications are toggled from on to off, where the frequency decreased less dramatically. We have hypothesized that such results are due to the nature of the notifications itself. There is a delay between when the notification state is toggled and when the user performance begins to reflect that change. As more notifications are triggered, the user responds to a greater degree, reducing the number of crutch words he or she utters.
+\item There were also a few variations in the behavior of the volunteers as notification-enabled periods were interleaved in a randomized manner. For example, there were scenarios in which users would only be influenced by the notifications of the application after several periods. In these cases, the periods were arranged such that the users began speaking and continued to do so over two and sometimes three periods. Due to these few instances, there were noticeable outliers in our data.
+\item Post-recording, the users noted that the vibration notification made them more aware of their speech and led to them to saying their crutch words less frequently. Furthermore, several were interested in a fully-featured, production version of the application for their own personal use.
+
+Judging from both the difference in crutch word frequency between notifications enabled and disabled as well as the general downward trend of the graph displayed, we can draw the conclusion that notifying users via  a vibration helps decrease speech disfluencies. Furthermore, the users, almost unanimously, noted that the notification of crutch word usage helped them avoid saying them throughout the course of them talking. A couple users mentioned that the notifications made them slightly nervous and self-conscious of their speech but that it faded over the course of the 16 minute trial. Both objectively and subjectively, the data indicates that Rhapsodize is effective in reducing crutch word usage.
+\end{itemize}
+
+\section{Conclusion}
+
+yeh2
+
+\section{Acknowledgments}
+
+CMU Sphinx, Carnegie Mellon University (http://cmusphinx.sourceforge.net/)
+
+% Balancing columns in a ref list is a bit of a pain because you
+% either use a hack like flushend or balance, or manually insert
+% a column break.  http://www.tex.ac.uk/cgi-bin/texfaq2html?label=balance
+% multicols doesn't work because we're already in two-column mode,
+% and flushend isn't awesome, so I choose balance.  See this
+% for more info: http://cs.brown.edu/system/software/latex/doc/balance.pdf
+%
+% Note that in a perfect world balance wants to be in the first
+% column of the last page.
+%
+% If balance doesn't work for you, you can remove that and
+% hard-code a column break into the bbl file right before you
+% submit:
+%
+% http://stackoverflow.com/questions/2149854/how-to-manually-equalize-columns-
+% in-an-ieee-paper-if-using-bibtex
+%
+% Or, just remove \balance and give up on balancing the last page.
+%
+\balance
+
+% If you want to use smaller typesetting for the reference list,
+% uncomment the following line:
+% \small
+\bibliographystyle{acm-sigchi}
+\bibliography{ubicomp}
+\end{document}
