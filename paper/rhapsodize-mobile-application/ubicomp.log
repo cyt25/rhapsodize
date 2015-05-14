@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  14 MAY 2015 04:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  14 MAY 2015 05:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -491,9 +491,6 @@ Missing character: There is no € in font ptmr7t!
 Missing character: There is no ™ in font ptmr7t!
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
 Missing character: There is no œ in font ptmr7t!
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
@@ -534,9 +531,6 @@ een already used, duplicate ignored
                    \relax 
 l.159 
        [3]
-Missing character: There is no â in font ptmr7t!
-Missing character: There is no € in font ptmr7t!
-Missing character: There is no ™ in font ptmr7t!
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
 Missing character: There is no ™ in font ptmr7t!
@@ -616,16 +610,12 @@ Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 273.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 273.
 Package rerunfilecheck Info: File `ubicomp.out' has not changed.
 (rerunfilecheck)             Checksum: 80D93AF64C5E9C9168939130C5120A18;726.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 273.
  ) 
 Here is how much of TeX's memory you used:
  6199 strings out of 493117
  88766 string characters out of 6135433
- 183274 words of memory out of 5000000
+ 183318 words of memory out of 5000000
  9542 multiletter control sequences out of 15000+600000
  25652 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -660,7 +650,7 @@ ive/2014/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/201
 4/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-di
 st/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/t
 ype1/urw/times/utmri8a.pfb>
-Output written on ubicomp.pdf (6 pages, 661915 bytes).
+Output written on ubicomp.pdf (6 pages, 661863 bytes).
 PDF statistics:
  142 PDF objects out of 1000 (max. 8388607)
  121 compressed objects within 2 object streams
