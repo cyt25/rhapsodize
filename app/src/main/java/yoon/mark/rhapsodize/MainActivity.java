@@ -22,6 +22,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.view.View;
 import android.os.CountDownTimer;
@@ -38,6 +39,8 @@ import edu.cmu.pocketsphinx.RecognitionListener;
 import edu.cmu.pocketsphinx.SpeechRecognizer;
 
 import android.support.v7.widget.Toolbar;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends ActionBarActivity implements RecognitionListener, OnClickListener {
     /* class variables */
@@ -65,6 +68,12 @@ public class MainActivity extends ActionBarActivity implements RecognitionListen
     public TextView totalCount;
     public TextView notificationType;
     public TextView searchWord;
+    public ProgressBar bar;
+    public TextView timeCap;
+    public TextView countCap;
+    public TextView detCap;
+    public TextView statusCap;
+    public TextView typeCap;
 
     /** Denotes selected notification state: 0 = none, 1 = vibrate, 2 = ring, 3 = both */
     public int notifyState = 1;
@@ -85,6 +94,8 @@ public class MainActivity extends ActionBarActivity implements RecognitionListen
         startB = (Button) this.findViewById(R.id.timer_button);
         startB.setOnClickListener(this);
         time = (TextView) this.findViewById(R.id.timer);
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Roboto-ThinItalic_0.ttf");
+        time.setTypeface(type);
         notificationStatus = (TextView) this.findViewById(R.id.notificationStatus);
         notificationType = (TextView) this.findViewById(R.id.notificationType);
         totalCount = (TextView) this.findViewById(R.id.totalCount);
@@ -92,6 +103,22 @@ public class MainActivity extends ActionBarActivity implements RecognitionListen
         time.setText(time.getText() + String.valueOf(startTime / 60000) + ":" + "00");
         counts = (TextView) this.findViewById(R.id.counts);
         searchWord = (TextView) this.findViewById(R.id.searchWord);
+        bar = (ProgressBar) this.findViewById(R.id.progressBar);
+        timeCap = (TextView) this.findViewById(R.id.timeCaption);
+        Typeface capType = Typeface.createFromAsset(getAssets(),"fonts/RobotoCondensed-BoldItalic_0.ttf");
+        timeCap.setTypeface(capType);
+        countCap = (TextView) this.findViewById(R.id.countCaption);
+        countCap.setTypeface(capType);
+        totalCount.setTypeface(type);
+        searchWord.setTypeface(type);
+        notificationStatus.setTypeface(type);
+        notificationType.setTypeface(type);
+        detCap = (TextView) this.findViewById(R.id.curDetectCaption);
+        statusCap = (TextView) this.findViewById(R.id.notStatusCaption);
+        typeCap = (TextView) this.findViewById(R.id.notTypeCaption);
+        detCap.setTypeface(capType);
+        statusCap.setTypeface(capType);
+        typeCap.setTypeface(capType);
 //        boolean[][] notificationArrays = {{true, true, false, false}, {true, false, true, false}, {true, false, false, true} ,{false, false, true, true}, {false, true, false, true}, {false, true, true, false}};
 //
 //        Random r = new Random();
@@ -101,26 +128,26 @@ public class MainActivity extends ActionBarActivity implements RecognitionListen
 //        notifications = notificationArray[0];
 
         if (notifications)
-            notificationStatus.setText("Notification status: On");
+            notificationStatus.setText("On");
         else
-            notificationStatus.setText("Notification status: Off");
+            notificationStatus.setText("Off");
 
         switch(notifyState) {
             case 0:
-                notificationType.setText("Notification type: Silent");
+                notificationType.setText("Silent");
                 break;
             case 1:
-                notificationType.setText("Notification type: Vibrate");
+                notificationType.setText("Vibrate");
                 break;
             case 2:
-                notificationType.setText("Notification type: Ring");
+                notificationType.setText("Ring");
                 break;
             case 3:
-                notificationType.setText("Notification type: Vibrate and ring");
+                notificationType.setText("Vibrate and ring");
                 break;
         }
 
-        searchWord.setText("Currently detecting: "+KEYWORD_SEARCH);
+        searchWord.setText(KEYWORD_SEARCH);
 
         // Initialize recognizer (i/o heavy, put in asynchronous task)
         new AsyncTask<Void, Void, Exception>() {
@@ -190,7 +217,7 @@ public class MainActivity extends ActionBarActivity implements RecognitionListen
                 r.play();
                 v.vibrate(300);
             }
-            totalCount.setText("Total count: " + String.valueOf(totalCount_1));
+            totalCount.setText(String.valueOf(totalCount_1));
             switchSearch(KEYWORD_SEARCH);
         }
         else if (text.equals(KEYWORD_SEARCH_2)) {
@@ -279,15 +306,19 @@ public class MainActivity extends ActionBarActivity implements RecognitionListen
         @Override
         public void onFinish() {
             time.setText("Time's up!");
+            time.setTextSize(35);
             counts.setText(counts.getText() + "Minute 16 count: " + String.valueOf(currentCount_1) + "\n");
             counts.setText(counts.getText() + "Total count: " + String.valueOf(totalCount_1));
+            Typeface capType = Typeface.createFromAsset(getAssets(),"fonts/RobotoCondensed-BoldItalic_0.ttf");
+            counts.setTypeface(capType);
             recognizer.cancel();
             recognizer.shutdown();
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
-            System.out.println(millisUntilFinished / 1000);
+            bar.setProgress((int) (100.0 - (((millisUntilFinished / (960.0 * 1000.0))) * 100.0)));
+//            System.out.println(millisUntilFinished / 1000);
             if ((millisUntilFinished / 1000)%60 < 10) {
                 time.setText("" + (millisUntilFinished / 1000) / 60 + ":0" + ((millisUntilFinished / 1000) % 60));
             }
@@ -298,15 +329,17 @@ public class MainActivity extends ActionBarActivity implements RecognitionListen
 
             if ((millisUntilFinished/1000) % 120 == 0) {
                 counts.setText(counts.getText() + "Minute " + String.valueOf(Math.abs((millisUntilFinished / 60000) - 16)) + " count: " + String.valueOf(currentCount_1) + "\n");
+                Typeface capType = Typeface.createFromAsset(getAssets(),"fonts/RobotoCondensed-BoldItalic_0.ttf");
+                counts.setTypeface(capType);
 //                notificationIdx += 1;
 //                if (notificationIdx == 4) {
 //                    notificationIdx = 0;
 //                }
 //                notifications = notificationArray[notificationIdx];
                 if (notifications)
-                    notificationStatus.setText("Notification status: On");
+                    notificationStatus.setText("On");
                 else
-                    notificationStatus.setText("Notification status: off");
+                    notificationStatus.setText("Off");
                 currentCount_1 = 0;
             }
 
