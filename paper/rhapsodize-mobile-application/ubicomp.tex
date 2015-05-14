@@ -116,6 +116,14 @@ These are some of the many approaches to speech analysis and feedback systems th
 
 Rhapsodize is intended to be a tool that a user can access on the go. The three components that are necessary for Rhapsodize to function as intended are a microphone, user-facing screen, and processor. Given these prerequisites, it made the most sense to make a mobile application. Our application is built on the Java-based Android mobile application platform (4.1+) [5]. The design decisions we made when creating the application hinged upon the use case that we wanted to have. As a result, the user-interface of the application reflects how we wanted the application to be used. Past the user-interface, the implementation of natural language processing to perform speech recognition is crucial to the functionality of the application. As a result, a lot of effort was put into making the recognition as accurate as possible.
 
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.9\columnwidth]{ui}
+\caption{User interface
+}
+\label{fig:figure1}
+\end{figure}
+
 \subsection{User Interface}
 
 When designing our application, we had two use cases in mind. The first was to have the application constantly open in the user’s background. A mic, via a bluetooth headset, would capture the user’s speech throughout the day, counting the times various crutch words were said in everyday conversation. This data can then show overall speech patterns of the user. The second use case was to have the application used as a utility to help users practice their speech in a controlled, quiet setting - i.e. the user would use the application to explicitly improve their speech. 
@@ -128,15 +136,6 @@ Another important consideration we had when designing the application was how to
 
 Once the user is finished practicing, the user presses a button to stop the recognition. The results page shows how many times each crutch word was said and how long the practice lasted. The user can then use this information to determine overall performance for the given session. There are many things that can be done to improve the user interface but they are not currently implemented. Discussion of future improvements can be found later in this paper.
 
-\begin{figure}[!h]
-\centering
-\includegraphics[width=0.9\columnwidth]{graph}
-\caption{The primary modes of the application: The recordings list, the profile page, and the review/record page.
-}
-\label{fig:figure1}
-\end{figure}
-
-
 \subsection{Technical Implementation}
 
 The usefulness of our application is entirely dependant on the accuracy of our speech recognition. As a result, a lot of emphasis is placed on this computation. There were two main application program interfaces (API’s) to consider when it comes to Android speech recognition and natural language processing. The first is the Google native speech recognition API [6]. Google's speech recognition is top-class. However, there are several drawbacks for this particular API. In general, the service is not very flexible. The process is completely abstracted and encapsulated, which is good for most people, but because we are using our application in a very specific way to search for keywords, being able to modify the process is a desirable feature. Furthermore, the Google speech recognition API does not support offline processing capabilities which means that it’s possible that the computation could be bottlenecked by the internet speed. However, the most important limitation that this API had was the lack of continuous keyword spotting. For our application to function as we want to, notifying the user in real time of crutch word usage, the speech processing needs to be done in real time. Google’s speech recognition library does not do this. 
@@ -145,7 +144,7 @@ As a result, we used CMU Sphinx [7]	, a speech recognition API that is designed 
 
 A lot of fine tuning of the speech recognition was needed in order to get decent accuracy from the system. CMU Sphinx performs signal processing to match the input sound against the phonetics of the words in its dictionary. A similarity matrix is calculated by comparing the input and the dictionary; if the similarity value crosses a certain threshold, a notification goes off, saying that there has been a match. Not only can we calibrate this threshold value, we can also change the dictionary that CMU Sphinx takes as an input. There are many trained dictionaries available and we found that one of the CMU Sphinx native dictionaries gave the best results.
 
-In performing keyword spotting, there are some nuances to consider. Oftentimes, crutch words such as “like” can be used in context correctly -- because the speech recognizer system is not smart enough to distinguish between a correct use of “like” and it being used as a crutch word, it simply notifies the user of both. There are some methods that can be used to try to minimize these occurrences. Given a large corpus, we can train a system to calculate the probability of a sequence of words. An N-gram is a set of consecutive words given a corpus. It can be seen as a window frame of words. Given a block of text, n words are viewed at a time. Using the Markov Assumption, we can estimate the likelihood of a word appearing in a sentence given the surrounding words. For example, if the user says “she is like a rose,” the system will initially hear “she is” and find the probability that the next token is “like.” If the probability is high, then the notification will not go off, as it’s likely that the word is being used properly and vice versa. This type of natural language processing is fairly computationally heavy. We implemented a similar system that would help us eliminate a small number of false positives but quickly learned that the processing power of mobile devices is not fast enough to support such complex computations. The phone processed the computation too slowly and as a result the phone was no longer giving real time feedback, which undermines the main functionality of the device. As mobile computing becomes faster, however, this is a good strategy to eliminate false positives.
+In performing keyword spotting, there are some nuances to consider. Oftentimes, crutch words such as “like” can be used in context correctly -- because the speech recognizer system is not smart enough to distinguish between a correct use of “like” and it being used as a crutch word, it simply notifies the user of both. There are some methods that can be used to try to minimize these occurrences. Given a large corpus, we can train a system to calculate the probability of a sequence of words. An n-gram is a set of n consecutive words. Given a block of text, n words are viewed at a time. From a corpus, we learn by looking at n words at a time and now have a reference for probabilities of a word appearing given previous words. Using the Markov Assumption, we can estimate the likelihood of a word appearing in a sentence given the surrounding words. For example, if the user says “she is like a rose,” the system will initially hear “she is” and find the probability that the next token is “like.” If the probability is high, then the notification will not go off, as it’s likely that the word is being used properly and vice versa. This type of natural language processing is fairly computationally heavy. We implemented a similar system that would help us eliminate a small number of false positives but quickly learned that the processing power of mobile devices is not fast enough to support such complex computations. The phone processed the computation too slowly and as a result the phone was no longer giving real time feedback, which undermines the main functionality of the application. As mobile computing becomes faster, however, this is a good strategy to eliminate false positives.
 
 \section{Methods}
 
@@ -226,7 +225,7 @@ Speech analysis, processing, and training is a very broad and complex process. T
 
 From the quanlitative data we collected, even given the small sample size, there is a significant indication that the crutch word frequency declines. Not only is there a noticable difference in crutch word frequency from when notifications were on and off, there is a general downward trend in frequency over the course of the 16 minute trial. Qualitatively, users reported that the notifications were beneficial and made them more aware of their speech habits. 
 
-Although there are many opportunities for future work, Rhapsodize is more than a proof of concept. It is a full fledged application that, as shown by our experiment, has real merit and value as a speech tool. Not only is it free and effective, it is easy to use and can be started with a press of a button. 
+Although there are many opportunities for future work, Rhapsodize is more than a proof of concept. It is a full fledged application that, as shown by our experiment, has real merit and value as a speech tool. Not only is it free and effective, it is easy to use and can be started with a press of a sbutton. 
 
 \section{Acknowledgments}
 
