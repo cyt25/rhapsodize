@@ -1,4 +1,4 @@
 # rhapsodize
-Info 4120 Final Project
+Android Application for Public Speaking Training
 
 Functional/Non-testing Version
